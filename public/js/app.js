@@ -2279,21 +2279,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: {
     userinfo: {
       name: '',
       fullname: '',
       avatar: '/img/noavatar.png'
+    },
+    token: {
+      headers: {
+        Authorization: 'Bearer ' + window.Laravel.api_token,
+        Accept: 'application/json'
+      }
     }
   },
   created: function created() {
@@ -2303,8 +2300,8 @@ __webpack_require__.r(__webpack_exports__);
     getUserInfo: function getUserInfo() {
       var _this = this;
 
-      var uri = "/profile/userinfo";
-      this.axios.get(uri).then(function (response) {
+      var uri = "/api/profile/userinfo";
+      this.axios.get(uri, this.token).then(function (response) {
         _this.userinfo = response.data[0];
       });
     }
@@ -2384,8 +2381,8 @@ __webpack_require__.r(__webpack_exports__);
     addItem: function addItem() {
       var _this = this;
 
-      var uri = '/profile/tasks/items';
-      this.axios.post(uri, this.item).then(function (response) {
+      var uri = '/api/profile/tasks/items';
+      this.axios.post(uri, this.item, this.$root.token).then(function (response) {
         _this.$router.push({
           name: 'DisplayItem'
         });
@@ -2462,19 +2459,19 @@ __webpack_require__.r(__webpack_exports__);
     fetchItems: function fetchItems() {
       var _this = this;
 
-      var uri = '/profile/tasks/items';
-      this.axios.get(uri).then(function (response) {
+      var uri = '/api/profile/tasks/items';
+      this.axios.get(uri, this.$root.token).then(function (response) {
         _this.items = response.data;
       });
     },
     deleteItem: function deleteItem(id) {
       var _this2 = this;
 
-      var uri = "/profile/tasks/items/".concat(id);
+      var uri = "/api/profile/tasks/items/".concat(id);
       this.items.map(function (item, i) {
         if (item.id == id) _this2.items.splice(i, 1);
       });
-      this.axios["delete"](uri);
+      this.axios["delete"](uri, this.$root.token);
     }
   }
 });
@@ -2541,16 +2538,16 @@ __webpack_require__.r(__webpack_exports__);
     getItem: function getItem() {
       var _this = this;
 
-      var uri = "/profile/tasks/items/".concat(this.$route.params.id, "/edit");
-      this.axios.get(uri).then(function (response) {
+      var uri = "/api/profile/tasks/items/".concat(this.$route.params.id, "/edit");
+      this.axios.get(uri, this.$root.token).then(function (response) {
         _this.item = response.data;
       });
     },
     updateItem: function updateItem() {
       var _this2 = this;
 
-      var uri = '/profile/tasks/items/' + this.$route.params.id;
-      this.axios.patch(uri, this.item).then(function (response) {
+      var uri = '/api/profile/tasks/items/' + this.$route.params.id;
+      this.axios.patch(uri, this.item, this.$root.token).then(function (response) {
         _this2.$router.push({
           name: 'DisplayItem'
         });
@@ -2612,8 +2609,8 @@ __webpack_require__.r(__webpack_exports__);
     getUserInfo: function getUserInfo() {
       var _this = this;
 
-      var uri = "/profile/userinfo";
-      this.axios.get(uri).then(function (response) {
+      var uri = "/api/profile/userinfo";
+      this.axios.get(uri, this.$root.token).then(function (response) {
         _this.userinfo = response.data[0];
       });
     },
@@ -2625,12 +2622,13 @@ __webpack_require__.r(__webpack_exports__);
       var existingObj = this;
       var config = {
         headers: {
-          'content-type': 'multipart/form-data'
+          'content-type': 'multipart/form-data',
+          'Authorization': 'Bearer ' + window.Laravel.api_token
         }
       };
       var data = new FormData();
       data.append('file', this.file);
-      this.axios.post('/upload', data, config).then(function (res) {
+      this.axios.post('/api/upload', data, config).then(function (res) {
         existingObj.success = 'Аватар обновлен!';
         document.querySelector('.avatar').setAttribute("src", res.data.success);
         document.querySelector('.avatar_big').setAttribute("src", res.data.success);
@@ -2717,8 +2715,8 @@ __webpack_require__.r(__webpack_exports__);
     fetchItems: function fetchItems() {
       var _this = this;
 
-      var uri = '/profile/edit/fields';
-      this.axios.get(uri).then(function (response) {
+      var uri = '/api/profile/edit/fields';
+      this.axios.get(uri, this.$root.token).then(function (response) {
         _this.items = response.data;
       });
     },
@@ -2726,8 +2724,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.errors = [];
-      var uri = '/profile/update/fields';
-      this.axios.patch(uri, this.items[0]).then(function (response) {
+      var uri = '/api/profile/update/fields';
+      this.axios.patch(uri, this.items[0], this.$root.token).then(function (response) {
         _this2.$router.push({
           name: 'ProfileEdit'
         });

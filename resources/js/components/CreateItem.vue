@@ -55,8 +55,8 @@
     },
     methods: {
       addItem(){
-        let uri = '/profile/tasks/items';
-        this.axios.post(uri, this.item).then((response) => {
+        let uri = '/api/profile/tasks/items';
+        this.axios.post(uri, this.item, this.$root.token).then((response) => {
           this.$router.push({name: 'DisplayItem'})
         })
     }

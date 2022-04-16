@@ -10,7 +10,11 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
+        
+        //if (Auth::check()) { echo 'OK !'; die; }
+        $user_id = Auth::id();
+
+        $items = Item::where('user_id', $user_id)->get();
         return response()->json($items);
     }
 

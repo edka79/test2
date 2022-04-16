@@ -6,10 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{{ config('app.name', 'Laravel') }}</title>        
+        <title>{{ config('app.name', 'Laravel') }}</title>    
+        <meta name="csrf-token" content="{{ csrf_token() }}">    
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
+        <script>
+            window.Laravel = @php echo json_encode(['api_token' => (Auth::user())->api_token]); @endphp
+        </script>
     </head>
     <body>
 

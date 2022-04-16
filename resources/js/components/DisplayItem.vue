@@ -43,10 +43,10 @@
 <script>
     export default {
         data(){
-            return{
+            return{                
                 items: []
             }
-        },
+        },        
         created: function()
         {
             this.fetchItems();
@@ -54,18 +54,18 @@
         methods: {
             fetchItems()
             {
-              let uri = '/profile/tasks/items';
-              this.axios.get(uri).then((response) => {
+              let uri = '/api/profile/tasks/items';
+              this.axios.get(uri, this.$root.token).then((response) => {
                   this.items = response.data;
               });
             },
             deleteItem(id)
             {
-              let uri = `/profile/tasks/items/${id}`;              
+              let uri = `/api/profile/tasks/items/${id}`;              
               this.items.map( (item, i) => {
                   if (item.id == id) this.items.splice(i, 1);
               });
-              this.axios.delete(uri);
+              this.axios.delete(uri, this.$root.token);
             }
         }
     }

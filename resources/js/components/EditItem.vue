@@ -51,15 +51,15 @@
         methods: {
             getItem()
             {
-              let uri = `/profile/tasks/items/${this.$route.params.id}/edit`;
-                this.axios.get(uri).then((response) => {
+              let uri = `/api/profile/tasks/items/${this.$route.params.id}/edit`;
+                this.axios.get(uri, this.$root.token).then((response) => {
                     this.item = response.data;
                 });
             },
             updateItem()
             {
-              let uri = '/profile/tasks/items/'+this.$route.params.id;
-                this.axios.patch(uri, this.item).then((response) => {
+              let uri = '/api/profile/tasks/items/'+this.$route.params.id;
+                this.axios.patch(uri, this.item, this.$root.token).then((response) => {
                   this.$router.push({name: 'DisplayItem'});
                 });
             }

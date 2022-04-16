@@ -61,16 +61,16 @@
         methods: {
             fetchItems()
             {
-              let uri = '/profile/edit/fields';
-              this.axios.get(uri).then((response) => {
+              let uri = '/api/profile/edit/fields';
+              this.axios.get(uri, this.$root.token).then((response) => {
                   this.items = response.data;
               });
             },
             updateFields()
             {
                 this.errors = [];
-                let uri = '/profile/update/fields';                
-                this.axios.patch(uri, this.items[0]).then((response) => {                    
+                let uri = '/api/profile/update/fields';                
+                this.axios.patch(uri, this.items[0], this.$root.token).then((response) => {                    
                    this.$router.push({name: 'ProfileEdit'});
                    this.success = 'Профиль обновлен!';
                 }).catch(error => {

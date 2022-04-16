@@ -38,8 +38,8 @@
         methods: {
             getUserInfo()
             {
-              let uri = `/profile/userinfo`;
-                this.axios.get(uri).then((response) => {
+              let uri = `/api/profile/userinfo`;
+                this.axios.get(uri, this.$root.token).then((response) => {
                     this.userinfo = response.data[0];
                 });
             },
@@ -51,12 +51,13 @@
                 let existingObj = this;
                 const config = {
                     headers: {
-                        'content-type': 'multipart/form-data'
+                        'content-type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + window.Laravel.api_token,
                     }
                 }
                 let data = new FormData();
                 data.append('file', this.file);
-                this.axios.post('/upload', data, config)
+                this.axios.post('/api/upload', data, config)
                     .then(function (res) {
                         existingObj.success = 'Аватар обновлен!';
                         document.querySelector('.avatar').setAttribute("src", res.data.success); 
